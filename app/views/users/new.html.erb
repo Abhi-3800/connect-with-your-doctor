@@ -1,0 +1,48 @@
+<div class="container mt-5 text-center">
+  <% if @user.errors.any? %>
+    <div class="alert alert-danger">
+      <h3>
+        <%= pluralize(@user.errors.count, "error") %> prohibited this account from being created:
+      </h3>
+      <% @user.errors.full_messages.each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<div class="row justify-content-center mt-5">
+  <div class="col-md-8 col-lg-4">
+    <div class="card shadow">
+      <div class="card-header bg-primary text-white text-center">
+        <h2 class="mb-0">Sign Up</h2>
+      </div>
+      <div class="card-body">
+        <%= form_with model: @user do |form| %>
+          <div class="mb-3">
+            <%= form.label :email_address, "Email Address", class: "form-label" %>
+            <%= form.email_field :email_address, required: true, autofocus: true, placeholder: "Enter your email", class: "form-control" %>
+          </div>
+          <div class="mb-3">
+            <%= form.label :password, "Password", class: "form-label" %>
+            <%= form.password_field :password, required: true, placeholder: "Enter your password", class: "form-control" %>
+          </div>
+          <div class="mb-3">
+            <%= form.label :password_confirmation, "Confirm Password", class: "form-label" %>
+            <%= form.password_field :password_confirmation, required: true, placeholder: "Confirm your password", class: "form-control" %>
+          </div>
+          <div class="mb-3">
+            <%= form.label :is_admin, "Are you an Admin?", class: "form-label" %>
+            <%= form.select :is_admin, [["User", false], ['Admin', true]],  required: true, autofocus: true, placeholder: "Yes or No", class: "form-control" %>
+            <%= form.label :is_doctor, "Are you a Doctor/Nurse?", class: "form-label" %>
+            <%= form.select :is_doctor, [["Yes", true], ['No', false]], required: true, autofocus: true, placeholder: "Yes or No", class: "form-control" %>
+          </div>
+          <div class="text-center">
+            <%= form.submit "Sign Up", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+        <p class="text-center mt-3">Already have an account? <%= link_to "Sign In", new_user_path %></p>
+      </div>
+    </div>
+  </div>
+</div>

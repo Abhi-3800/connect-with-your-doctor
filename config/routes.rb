@@ -10,5 +10,13 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  # root "posts#index"
+  root "hospitals#index"
+
+  resources :hospitals, only: [:new, :create, :index, :show, :edit, :destroy, :update]
+  resources :users, only: [:new, :create]
+  resource :session
+  resources :passwords, param: :token
+  get 'nearby_hospitals', to: 'nearby_hospitals#index', as: :nearby_hospitals
+  get 'nearby_hospitals/search', to: 'nearby_hospitals#search', as: :search_nearby_hospitals
+  get 'nearby_hospitals/download_csv', to: 'nearby_hospitals#download_csv', as: :download_nearby_hospitals
 end

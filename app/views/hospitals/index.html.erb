@@ -1,0 +1,61 @@
+<% if @hospitals.any? %>
+<div class="d-flex justify-content-center mt-5">
+  <div class="w-auto">
+    <div class="d-flex align-items-center position-relative mb-3">
+      <h1 class="w-100 text-center mb-0">Hospitals</h1>
+      <% if authenticated? %>
+        <%= link_to 'Sign Out', session_path, data: {turbo_method: :delete}, class: "btn btn-primary position-absolute top-50 end-0 translate-middle-y" %>
+      <% else %>
+        <%= link_to 'Sign In', new_session_path, class: "btn btn-primary position-absolute top-50 end-0 translate-middle-y" %>
+      <% end %> 
+    </div>
+    <div class="d-flex justify-content-center">
+      <table class="table table-bordered table-striped mb-0 text-center">
+        <thead class="table-dark">
+          <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip Code</th>
+            <th>Country</th>
+            <th>Phone Number</th>
+            <th>Establishment Date</th>
+            <th>Last Updated</th>
+            <th colspan="3">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @hospitals.each do |hospital| %>
+            <tr>
+              <td><%= hospital.name %></td>
+              <td><%= hospital.address_line1 %>, <%= hospital.address_line2 %></td>
+              <td><%= hospital.city %></td>
+              <td><%= hospital.state %></td>
+              <td><%= hospital.zipcode %></td>
+              <td><%= hospital.country %></td>
+              <td><%= hospital.phone_number %></td>
+              <td><%= hospital.date_of_establishment.strftime("%Y-%m-%d") %></td>
+              <td><%= hospital.updated_at %>
+              <td><%= link_to "Show", hospital_path(hospital), class: "btn btn-info btn-sm" %></td>
+              <% if Current&.user&.is_admin == true %>
+                <td><%= link_to "Edit", edit_hospital_path(hospital), class: "btn btn-warning btn-sm" %></td>
+                <td><%= link_to "Delete", hospital_path(hospital),
+                              data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+                              class: "btn btn-danger btn-sm" %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<% else %>
+  <p>No hospitals found.</p>
+<% end %><br/>
+<div class="text-center">
+  <%= link_to 'Add Hospital', new_hospital_path, class: 'btn btn-primary' %>
+  <%= link_to 'Find Nearby Hospitals', nearby_hospitals_path, class: 'btn btn-secondary' %>
+</div>

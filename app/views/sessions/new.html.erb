@@ -1,0 +1,35 @@
+<div class="container mt-5 text-center">
+  <%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
+  <%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
+</div>
+
+<div class="row justify-content-center mt-5">
+  <div class="col-md-8 col-lg-4">
+    <div class="card shadow">
+      <div class="text-center mt-3">
+        <h2 class="mb-0">Log In</h2>
+      </div>
+      <div class="card-body">
+        <%= form_with url: session_path do |form| %>
+          <div class="mb-3">
+            <%= form.label :email_address, "Email Address", class: "form-label" %>
+            <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address], class: "form-control" %>
+          </div>
+          <div class="mb-3">
+            <%= form.label :password, "Password", class: "form-label" %>
+            <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72, class: "form-control" %>
+          </div>
+          <div class="mb-3 form-check text-center">
+            <%= form.submit "Log in", class: "btn btn-primary" %>
+            <%= link_to "Home", root_path, class: "btn btn-secondary" %>
+          </div>
+          <div class="text-center">
+            <p class="mb-0">Don't have an account? <%= link_to "Sign Up", new_user_path %></p>
+            <p class="mb-0">or
+            <%= link_to "Forgot password?", new_password_path %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

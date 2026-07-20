@@ -1,0 +1,12 @@
+<div class="text-center container mt-5">
+    <h1>Hospital: <%= @hospital.name %></h1>
+    <strong><p>Address: </strong><%= @hospital.address_line1 %>, <%= @hospital.address_line2 %></p>
+    <strong><p>City: </strong><%= @hospital.city %></p>
+    <strong><p>State: </strong><%= @hospital.state %></p>
+    <strong><p>Zipcode: </strong><%= @hospital.zipcode %></p>
+    <strong><p>Country: </strong><%= @hospital.country %></p>
+    <strong><p>Phone Number: </strong><%= @hospital.phone_number %></p>
+    <strong><p>Establishment: <%= @hospital.date_of_establishment.strftime("%Y-%m-%d") %></p></strong>
+    <%= link_to 'Edit hospital', edit_hospital_path(@hospital), class: 'btn btn-primary' %>
+    <%= link_to 'Back to Hospitals', hospitals_path, class: 'btn btn-secondary' %>
+</div>

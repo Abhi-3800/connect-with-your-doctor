@@ -1,0 +1,37 @@
+<% if @nearby_hospitals.empty? %>
+  <div class="alert alert-warning text-center mt-5" role="alert">
+    No nearby hospitals found.
+  </div>
+  <% else %>
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Nearby Hospitals in <%= params[:location] %></h2>
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Latitude</th>
+          <th>Longitude</th>
+          <th>Full Address</th>
+          <th>District</th>
+          <th class="text-nowrap">Postal Code</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @nearby_hospitals.each do |hospital| %>
+          <tr>
+            <td><%= hospital.dig("tags","name") || "Unnamed Hospital" %></td>
+            <td><%= hospital["lat"] || hospital.dig("center","lat") %></td>
+            <td><%= hospital["lon"] || hospital.dig("center","lon") %></td>
+            <td><%= hospital.dig("tags", "addr:full") %></td>
+            <td><%= hospital.dig("tags", "addr:district") %></td>
+            <td><%= hospital.dig("tags", "addr:postcode") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+<div class="text-center mb-3">
+  <%= link_to 'Back to Search', nearby_hospitals_path, class: 'btn btn-secondary mt-3' %>
+  <%= link_to 'Download CSV', download_nearby_hospitals_path(location: params[:location]), class: 'btn btn-secondary mt-3' %>
+</div>
